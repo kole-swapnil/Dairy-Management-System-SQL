@@ -1,0 +1,63 @@
+	CREATE DATABASE MILK_FACTORY;
+GRANT ALL ON MILK_FACTORY.* TO 'kole'@'localhost' IDENTIFIED BY 'swapnil';
+GRANT ALL ON MILK_FACTORY.* TO 'kole'@'127.0.0.1' IDENTIFIED BY 'swapnil';
+
+
+CREATE TABLE Farmer (
+    farmer_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30),
+    aadhar BIGINT,
+    index(aadhar)
+) ENGINE=InnoDB CHARSET=utf8;
+
+CREATE TABLE Farm (
+    farm_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    location VARCHAR(30),
+    dairy_produced BIGINT,
+    farmer_id INTEGER,
+    index(location),
+    CONSTRAINT FOREIGN KEY(farmer_id)
+    REFERENCES farmer (farmer_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB CHARSET=utf8;
+
+
+CREATE TABLE customer (
+    customer_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30),
+    aadhar BIGINT,
+    index(aadhar)
+) ENGINE=InnoDB CHARSET=utf8;
+
+CREATE TABLE milk_packet (
+    packet_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    capacity INTEGER,
+    mfg_date DATE,
+    farm_id INTEGER,
+    customer_id INTEGER,
+    CONSTRAINT FOREIGN KEY(farm_id)
+    REFERENCES farm (farm_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY(customer_id)
+    REFERENCES customer (customer_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB CHARSET=utf8;
+
+
+INSERT INTO farmer(name,aadhar) VALUES("Ramu",4585498427);
+INSERT INTO farmer(name,aadhar) VALUES("Shamu",2354498427);
+
+INSERT INTO farm(location,dairy_produced,farmer_id) VALUES("patna",987,1);
+INSERT INTO farm(location,dairy_produced,farmer_id) VALUES("khorda",748,2);
+
+INSERT INTO customer(name,aadhar) VALUES("Swapnil",1429384427);
+INSERT INTO customer(name,aadhar) VALUES("Priyajeet",6668771574);
+
+INSERT INTO milk_packet(capacity,mfg_date,farm_id,customer_id) VALUES(500,"2020-05-01",5,9);
+INSERT INTO milk_packet(capacity,mfg_date,farm_id,customer_id) VALUES(1500,"2020-05-01",6,10);
+INSERT INTO milk_packet(capacity,mfg_date,farm_id,customer_id) VALUES(2500,"2020-05-01",7,9);
+INSERT INTO milk_packet(capacity,mfg_date,farm_id,customer_id) VALUES(1000,"2020-05-01",7,11);
+INSERT INTO milk_packet(capacity,mfg_date,farm_id,customer_id) VALUES(1000,"2020-05-01",8,12);
+INSERT INTO milk_packet(capacity,mfg_date,farm_id,customer_id) VALUES(1500,"2020-05-01",5,13);
+
+SELECT customer.name,packet_id,mfg_date,capacity,location,farmer.name FROM milk_packet JOIN customer JOIN farm JOIN farmer ON farm.farmer_id = farmer.farmer_id and milk_packet.farm_id = farm.farm_id and customer.customer_id = milk_packet.customer_id;

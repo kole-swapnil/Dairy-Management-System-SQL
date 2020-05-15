@@ -1,0 +1,55 @@
+	CREATE DATABASE MILK_FACTORY;
+GRANT ALL ON MILK_FACTORY.* TO 'kole'@'localhost' IDENTIFIED BY 'swapnil';
+GRANT ALL ON MILK_FACTORY.* TO 'kole'@'127.0.0.1' IDENTIFIED BY 'swapnil';
+
+
+CREATE TABLE Farmer (
+    farmer_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30),
+    aadhar BIGINT,
+    index(aadhar)
+) ENGINE=InnoDB CHARSET=utf8;
+
+CREATE TABLE Farm (
+    farm_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    location VARCHAR(30),
+    dairy_produced BIGINT,
+    farmer_id INTEGER,
+    index(location),
+    CONSTRAINT FOREIGN KEY(farmer_id)
+    REFERENCES farmer (farmer_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB CHARSET=utf8;
+
+
+CREATE TABLE customer (
+    customer_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(30),
+    aadhar BIGINT,
+    index(aadhar)
+) ENGINE=InnoDB CHARSET=utf8;
+
+CREATE TABLE milk_packet (
+    packet_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    capacity INTEGER,
+    mfg_date DATE,
+    farm_id INTEGER,
+    customer_id INTEGER,
+    CONSTRAINT FOREIGN KEY(farm_id)
+    REFERENCES farm (farm_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FOREIGN KEY(customer_id)
+    REFERENCES customer (customer_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB CHARSET=utf8;
+
+
+INSERT INTO farmer(name,aadhar) VALUES("Ramu",4585498427);
+INSERT INTO farmer(name,aadhar) VALUES("Shamu",2354498427);
+
+INSERT INTO farm(location,dairy_produced,farmer_id) VALUES("patna",987,1);
+INSERT INTO farm(location,dairy_produced,farmer_id) VALUES("khorda",748,2);
+
+INSERT INTO customer(name,aadhar) VALUES("Swapnil",1429384427);
+INSERT INTO customer(name,aadhar) VALUES("Priyajeet",6668771574);
+
