@@ -1,7 +1,10 @@
-	CREATE DATABASE MILK_FACTORY;
+//Create Database
+
+CREATE DATABASE MILK_FACTORY;
 GRANT ALL ON MILK_FACTORY.* TO 'kole'@'localhost' IDENTIFIED BY 'swapnil';
 GRANT ALL ON MILK_FACTORY.* TO 'kole'@'127.0.0.1' IDENTIFIED BY 'swapnil';
 
+//Create Table Farmer
 
 CREATE TABLE Farmer (
     farmer_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -9,6 +12,8 @@ CREATE TABLE Farmer (
     aadhar BIGINT,
     index(aadhar)
 ) ENGINE=InnoDB CHARSET=utf8;
+
+//Create Table Farm
 
 CREATE TABLE Farm (
     farm_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -21,6 +26,7 @@ CREATE TABLE Farm (
     ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB CHARSET=utf8;
 
+//Create Table Customer
 
 CREATE TABLE customer (
     customer_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -28,6 +34,8 @@ CREATE TABLE customer (
     aadhar BIGINT,
     index(aadhar)
 ) ENGINE=InnoDB CHARSET=utf8;
+
+//Create Table Milk_packet
 
 CREATE TABLE milk_packet (
     packet_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -43,6 +51,8 @@ CREATE TABLE milk_packet (
     ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB CHARSET=utf8;
 
+
+//Insert Statements
 
 INSERT INTO farmer(name,aadhar) VALUES("Ramu",4585498427);
 INSERT INTO farmer(name,aadhar) VALUES("Shamu",2354498427);
